@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>AI日报生成器</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: #f5f5f5;
+      padding: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🚀 AI日报生成器</h1>
+
+  <input id="topic" placeholder="输入主题，如：AI行业趋势" size="40"/>
+  <button onclick="generate()">生成日报</button>
+
+  <p id="loading" style="display:none;">⏳ 正在生成，请稍等...</p>
+
+  <div id="result"></div>
+
+  <script>
+    async function generate() {
+      const topic = document.getElementById('topic').value;
+      const resultDiv = document.getElementById('result');
+      const loading = document.getElementById('loading');
+
+      if (!topic || topic.length < 2) {
+        alert("请输入有效主题");
+        return;
+      }
+
+      loading.style.display = "block";
+      resultDiv.innerText = "";
+
+      try {
+        const res = await fetch('http://localhost:3000/api/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ topic })
+        });
+
+        const data = await res.json();
+
+        resultDiv.innerText = data.content || data.result;
+
+      } catch (err) {
+        resultDiv.innerText = "❌ 请求失败，请检查后端是否启动";
+      }
+
+      loading.style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
