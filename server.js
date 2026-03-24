@@ -22,6 +22,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 // ========== 1. 静态资源 ==========
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -187,6 +188,6 @@ app.get('/', (req, res) => {
 });
 
 // ========== 9. 启动 ==========
-app.listen(PORT, () => {
-  console.log(`🚀 http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 http://0.0.0.0:${PORT}`);
 });
