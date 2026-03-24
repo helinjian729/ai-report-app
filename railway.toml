@@ -1,0 +1,7 @@
+[build]
+builder = "NIXPACKS"
+
+[build.nixpacks]
+phases = {
+  setup = ["node@20"]
+}
